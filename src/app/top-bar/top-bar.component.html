@@ -1,0 +1,31 @@
+<ul nz-menu [nzMode]="'horizontal'">
+  <li nz-menu-item><a routerLink="/home"> CE Issues</a></li>
+  <li nz-menu-item><a routerLink="/home"> 首页</a></li>
+  <li nz-menu-item><a routerLink="/issue-mail">邮件管理</a></li>
+  <li nz-menu-item><a routerLink="/issue-category">编码管理</a></li>
+  <li nz-menu-item><a routerLink="/issue-trace">问题追踪</a></li>
+  <li nz-menu-item><a routerLink="/issue-version">版本控制</a></li>
+  <li nz-submenu>
+    <span title><i class="anticon anticon-appstore"></i> 统计信息</span>
+    <ul>
+      <li nz-menu-group>
+        <ul>
+          <li nz-menu-item><a routerLink="/count-trend">问题趋势</a></li>
+          <li nz-menu-item><a routerLink="/count-projects">项目占比</a></li>
+          <li nz-menu-item><a routerLink="/count-types">类别占比</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li nz-submenu>
+    <span title><i class="anticon anticon-appstore"></i> 帮助</span>
+    <ul>
+      <li nz-menu-group>
+        <ul>
+          <li nz-menu-item><a routerLink="/issue-help">问题搜索说明</a></li>
+          <li nz-menu-item><a>关于</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>`

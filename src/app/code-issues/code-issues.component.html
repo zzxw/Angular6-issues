@@ -1,0 +1,64 @@
+<div class="col-md-12">
+
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="col-lg-2">
+        <span>编号类别：</span>
+      </div>
+      <div class="col-lg-9">
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="true">
+            请选择
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <div *ngIf="data">
+              <li *ngFor="let item of data">
+                <a (click)="showList(item)">{{item.values[1] +" " + item.values[3]}}</a>
+              </li>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--<div class="row">
+    <div class="col-lg-8">
+      <div class="col-lg-2">
+      <span>编号类别:</span>
+      </div>
+      <div class="col-lg-9">
+        <select>
+          <option>请选择</option>
+          <div *ngFor="let item of data">
+            <option (click)="showList(item)">{{item.values[1] + " " + item.values[3]}}</option>
+          </div>
+        </select>
+      </div>
+    </div>
+  </div>-->
+
+  <div class="table-responsive table-hover">
+    <table class="table">
+      <thead>
+      <tr class="row mx-0">
+        <th class="col-1">#</th>
+        <th class="col-2">编号</th>
+        <th class="col-5">描述</th>
+        <th class="col-2">最大编号</th>
+        <th class="col-2">新编号</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="row mx-0" #test *ngFor="let item of list" (click)="getMaxCode(test);">
+        <td class="col-1">{{item.values[0]-count+1}}</td>
+        <td class="col-2">{{item.values[2]}}</td>
+        <td class="col-5">{{item.values[3]}}</td>
+        <td class="col-2"></td>
+        <td class="col-2"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
