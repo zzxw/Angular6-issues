@@ -23,6 +23,8 @@ export class MailListComponent implements OnInit {
   subject: string;
   status: string;
   option: Array<Object>;
+  isShow: boolean;
+  icon: string;
   constructor(public http: Http, public sanitizer: DomSanitizer) {
     this.service = new MailService(http);
     this.options = new Options();
@@ -48,6 +50,8 @@ export class MailListComponent implements OnInit {
       }
     }
     console.log(this.option);
+    this.isShow = false;
+    this.icon = 'anticon anticon-caret-down';
   }
   submit(obj) {
     const range: Array<string> = [];
@@ -67,16 +71,18 @@ export class MailListComponent implements OnInit {
   }
   clear() {
     this.subject = '';
-
+    this.status = '';
+    this.dateRange = [];
+    this.getData(query);
   }
   /*static change(str) {
     console.log(str);
   }*/
-  getData(query: any): void {
-    const responseData = this.service.getData(query);
+  getData(condition: any): void {
+    const responseData = this.service.getData(condition);
     console.log(responseData);
-    this.currentPage = query.page.currentPage;
-    console.log('currentPageNo:' + query.page.currentPage);
+    this.currentPage = condition.page.currentPage;
+    console.log('currentPageNo:' + condition.page.currentPage);
     responseData.subscribe((res: Response) => {
       const item = res.json();
       console.log(item);
@@ -127,5 +133,8 @@ export class MailListComponent implements OnInit {
     console.log(query);
     this.getData(query);
   }
-
+  toggle() {
+    this.isShow = this.isShow ? false : true;
+    this.icon = this.isShow ? 'anticon anticon-caret-up' : 'anticon anticon-caret-down';
+  }
 }

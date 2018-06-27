@@ -22,7 +22,6 @@ export class IssuesComponent implements OnInit {
     this.service = new IssuesService(http);
     this.tabs = [];
     this.issues = [];
-    this.tabs.push('test');
     this.query = {
       page: {
         currentPage: 1,

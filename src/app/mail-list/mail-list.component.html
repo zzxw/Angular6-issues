@@ -7,13 +7,14 @@
         <input type="text" nz-input placeholder="模糊查询" [(ngModel)]="subject">
       </nz-input-group>
       <ng-template #suffixIconButton>
-        <button nz-button nzType="primary" nzSearch><i class="anticon anticon-caret-down"></i></button>
+        <button nz-button nzType="primary" nzSearch (click)="toggle();"><i [class]="icon"></i></button>
         <button nz-button nzType="primary" nzSearch (click)="submit()"><i class="anticon anticon-search"></i></button>
         <button nz-button nzType="primary" (click)="clear();">
           <i class="anticon anticon-close"></i>
         </button>
       </ng-template>
       <br/>
+    <div *ngIf="isShow">
       高级搜索:<br/>
       邮件状态:
       <nz-select style="width: 100px;" nzShowSearch nzAllowClear nzDropdownMatchSelectWidth nzPlaceHolder="邮件状态" [(ngModel)]="status" (ngModelChange)="submit($event)">
@@ -24,6 +25,7 @@
     日期选择:<nz-range-picker  [(ngModel)]="dateRange"  (ngModelChange)="submit($event)">
     </nz-range-picker><!--[nzRanges]="ranges1" -->
     <br>
+    </div>
   </div>
 </div>
   <div nz-col nzSpan="6">

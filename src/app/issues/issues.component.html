@@ -1,5 +1,9 @@
-<nz-tabset [nzType]="'card'" [nzTabBarExtraContent]="extraTemplate">
-  <nz-tab *ngFor="let tab of tabs" [nzTitle]="titleTemplate">
+<nz-tabset [nzType]="'card'" [nzTabBarExtraContent]="extraTemplate" nzShowPagination="true">
+  <nz-tab nzTitle="问题追踪">
+    <i class="anticon anticon-search"></i>
+    <input type="text" nz-input placeholder="模糊查询" [(ngModel)]="subject">
+  </nz-tab>
+  <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab">
     <ng-template #titleTemplate>
       <div>
         {{ tab }}
@@ -15,14 +19,14 @@
 
 
 
-<ul id="myTab" class="nav nav-tabs">
+<!--<ul id="myTab" class="nav nav-tabs">
   <li class="active">
     <a data-toggle="tab" href="#home">问题追踪</a>
   </li>
   <li *ngFor="let item of tabs">
     <a data-toggle="tab" href="#{{item}}">{{item}}</a>
   </li>
-</ul>
+</ul>-->
 <div id="myTabContent" class="tab-content" *ngFor="let item of tabs">
   <div class="tab-pane fade in active" id="home">
     <div class='row col-md-12' class='form-inline'>
