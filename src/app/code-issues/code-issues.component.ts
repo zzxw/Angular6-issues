@@ -14,11 +14,23 @@ export class CodeIssuesComponent implements OnInit {
   count: number;
   maxCode: string;
   nextCode: string;
+  // table test
+  dataSet: Object;
+  loading: boolean;
+  total: number;
+  pageIndex: number;
+  pageSize: number;
+  filterGender: Object;
+  options: Array<Object>;
+  selected: any;
   constructor(public http: Http) {
     this.service = new CodeIssuesService(this.http);
   }
   ngOnInit() {
     this.getData();
+    this.options = [{
+      value: 'zhejiang',
+      label: 'Zhejiang'}];
   }
   myAddEvent(obj, event, func) {
     if (obj.attachEvent) {
@@ -36,6 +48,12 @@ export class CodeIssuesComponent implements OnInit {
       if (item.success) {
         this.data = item.records;
         console.log(this.data);
+        // this.options = [];
+       /* for (const i of this.data) {
+          const name = i.values[1] + i.values[3];
+          this.options.push({value: name, label: name});
+        }
+        console.log(this.options);*/
       }
     }, (error: string) => {
       console.log(error);
@@ -53,9 +71,9 @@ export class CodeIssuesComponent implements OnInit {
       if (item.success) {
         if (item.records[0].values[0].trim() !== '') {
           this.maxCode = item.records[0].values[0];
-          let codes = this.maxCode.split('-');
+          const codes = this.maxCode.split('-');
           const last = codes[codes.length - 1];
-          const next = (parseInt(last) + 1) + '';
+          const next = (parseInt(last, 0) + 1) + '';
           codes[codes.length - 1] = next;
           this.nextCode = codes.join('-');
         }
@@ -66,9 +84,12 @@ export class CodeIssuesComponent implements OnInit {
       console.log(error);
     });
   }
-  showList(obj: any): void {
-    console.log(obj);
-    const no: number = obj.values[0];
+  showList(no: any): void {
+    if (no == null || typeof(no) === 'undefined') {
+      return;
+    }
+    console.log(no);
+    this.loading = true;
     const responseData = this.service.showList(no);
     console.log(responseData);
     responseData.subscribe((res: Response) => {
@@ -77,14 +98,21 @@ export class CodeIssuesComponent implements OnInit {
       if (item.success) {
         this.list = item.records;
         this.count = this.list[0].values[0];
+        this.total = item.recordCount;
         console.log(this.list);
+        this.loading = false;
       }
+    }, (err: string) => {
+      console.log(err);
+      this.loading = false;
     });
-    const tr = document.getElementsByTagName('tr');
+    /*const tr = document.getElementsByTagName('tr');
     console.log(tr.length);
     for (let i = 0; i < tr.length; i++) {
       this.myAddEvent(tr[i], 'click', this.getMaxCode);
-    }
+    }*/
   }
-
+  searchData() {}
+  sort($event) {}
+  updateFilter($event) {}
 }

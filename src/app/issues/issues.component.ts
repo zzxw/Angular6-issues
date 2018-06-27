@@ -105,4 +105,6 @@ export class IssuesComponent implements OnInit {
   showInfo(obj: Object) {
     console.log(obj);
   }
+  closeTab(tab) {}
+  newTab(tab) {}
 }

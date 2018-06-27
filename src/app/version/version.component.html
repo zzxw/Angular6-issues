@@ -1,3 +1,58 @@
-<p>
-  version works!
-</p>
+编号类别:
+<nz-select style="width: 300px;" nzShowSearch nzAllowClear nzDropdownMatchSelectWidth nzPlaceHolder="选择编号" [(ngModel)]="version" (ngModelChange)="showList(version)">
+  <nz-option nzCustomContent [nzValue]= "item.values[0]" [nzLabel] = "item.values[0]" *ngFor="let item of versions">
+    {{item.values[0]}}
+  </nz-option>
+</nz-select>
+<div nz-row>
+  <div nz-col [nzSpan]="15">
+<nz-table
+  nzShowSizeChanger
+  [nzFrontPagination]="false"
+  [nzLoading]="loading"
+  [nzTotal]="total"
+  [(nzPageIndex)]="pageIndex"
+  [(nzPageSize)]="pageSize"
+  nzSize="middle"
+  [nzScroll]="{ y: '650px'}"
+  nzBordered>
+  <thead (nzSortChange)="sort($event)" nzSingleSort>
+  <tr>
+    <th nzShowSort nzWidth="20%">CE编号</th>
+    <th nzShowFilter nzWidth="70%">标题</th>
+    <th nzShowSort nzWidth="10%">项目</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of data">
+    <td><a>{{item['values'][1]}}</a></td>
+    <td>{{item['values'][4]}}</td>
+    <td>{{item['values'][5]}}</td>
+  </tr>
+  </tbody>
+</nz-table>
+</div>
+<div nz-col [nzSpan]="9">
+<nz-table
+  nzShowSizeChanger
+  [nzFrontPagination]="false"
+  [nzLoading]="loading"
+  [nzTotal]="total"
+  nzSize="small"
+  [(nzPageIndex)]="pageIndex"
+  [(nzPageSize)]="pageSize"
+  [nzScroll]="{ y: '650px'}"
+  nzBordered>
+  <thead (nzSortChange)="sort($event)" nzSingleSort>
+  <tr>
+    <th nzShowSort>代码清单</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of list">
+    <td>{{item['values'][0]}}</td>
+  </tr>
+  </tbody>
+</nz-table>
+  </div>
+</div>

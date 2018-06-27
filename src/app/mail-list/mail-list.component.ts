@@ -18,16 +18,14 @@ export class MailListComponent implements OnInit {
   records: number;
   iFrame: SafeResourceUrl;
   currentPage: number;
-  dateRange: string;
-  keys: Array<string>;
-  values: Array<string>;
+  dateRange: Array<Date>;
   options: Options;
   subject: string;
+  status: string;
+  option: Array<Object>;
   constructor(public http: Http, public sanitizer: DomSanitizer) {
     this.service = new MailService(http);
     this.options = new Options();
-    this.keys = [];
-    this.values = [];
   }
 
   ngOnInit() {
@@ -42,34 +40,29 @@ export class MailListComponent implements OnInit {
     query.page.currentPage = 1;
     this.getData(query);
     // MailListComponent.showCal();
-    const option = this.options.getOptions('mail_status');
-    for (let i in option) {
-      this.keys.push(i);
-      this.values.push(option[i]);
+    const mailOptions = this.options.getOptions('mail_status');
+    this.option = [];
+    for (const i in mailOptions) {
+      if (mailOptions.hasOwnProperty(i)) {
+        this.option.push({value: i, key: mailOptions[i]});
+      }
     }
-    console.log(this.keys);
-    console.log(this.values);
+    console.log(this.option);
   }
-  test(str) {
-    console.log(str);
-    const date = this.dateRange;
-    console.log(date);
-  }
-  submit() {
-    this.dateRange = (document.getElementById("time") as any).value;
+  submit(obj) {
+    const range: Array<string> = [];
     console.log(this.dateRange);
-    let range: Array<string> = [];
-    if (this.dateRange.trim() !== '') {
-      const dates = this.dateRange.split(' ');
-      const startTime = new Date(Date.parse(dates[0].replace(/-/g,  "/")));
-      const endTime = new Date(Date.parse(dates[2].replace(/-/g,  "/")));
-      range.push(startTime.toISOString());
-      range.push(endTime.toISOString());
+    if (typeof(this.dateRange) !== 'undefined' && this.dateRange.length !== 0) {
+      range.push((this.dateRange[0] as any).toISOString());
+      range.push((this.dateRange[1] as any).toISOString());
     }
-    console.log(range);
     query.criteria.daterange = range;
-    query.criteria.subject = this.subject.trim();
-    console.log(query);
+    if (typeof(this.subject) !== 'undefined') {
+      query.criteria.subject = this.subject.trim();
+    }
+    if (this.status != null && typeof(this.status) !== 'undefined') {
+      query.criteria.status = this.status;
+    }
     this.getData(query);
   }
   clear() {
