@@ -20,6 +20,7 @@ import { TrendComponent } from './trend/trend.component';
 import { TypesComponent } from './types/types.component';
 import { VersionComponent } from './version/version.component';
 import {RouterModule} from '@angular/router';
+import { AboutComponent } from './about/about.component';
 
 registerLocaleData(zh);
 
@@ -36,7 +37,8 @@ registerLocaleData(zh);
     TopBarComponent,
     TrendComponent,
     TypesComponent,
-    VersionComponent
+    VersionComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
@@ -87,6 +89,10 @@ registerLocaleData(zh);
         {
           path: 'issue-help',
           component: HelpComponent
+        },
+        {
+          path: 'about',
+          component: AboutComponent
         }
       ]
     )
