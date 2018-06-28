@@ -57,16 +57,18 @@ export class MailListComponent implements OnInit {
     const range: Array<string> = [];
     console.log(this.dateRange);
     if (typeof(this.dateRange) !== 'undefined' && this.dateRange.length !== 0) {
-      range.push((this.dateRange[0] as any).toISOString());
-      range.push((this.dateRange[1] as any).toISOString());
+      range.push(this.dateRange[0].toISOString());
+      range.push(this.dateRange[1].toISOString());
     }
     query.criteria.daterange = range;
-    if (typeof(this.subject) !== 'undefined') {
-      query.criteria.subject = this.subject.trim();
+    if (this.subject == null || typeof(this.subject) === 'undefined') {
+      this.subject = '';
     }
-    if (this.status != null && typeof(this.status) !== 'undefined') {
-      query.criteria.status = this.status;
+    query.criteria.subject = this.subject.trim();
+    if (this.status == null && typeof(this.status) === 'undefined') {
+      this.status = '';
     }
+    query.criteria.status = this.status;
     this.getData(query);
   }
   clear() {

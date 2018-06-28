@@ -21,7 +21,7 @@
         <nz-option nzCustomContent [nzValue]= "item['value']" [nzLabel] = "item['key']" *ngFor="let item of option">
           {{item['key']}}
         </nz-option>
-      </nz-select><br/>
+      </nz-select>
     日期选择:<nz-range-picker  [(ngModel)]="dateRange"  (ngModelChange)="submit($event)">
     </nz-range-picker><!--[nzRanges]="ranges1" -->
     <br>

@@ -1,12 +1,6 @@
-<div class="col-md-12">
-  <div class="col-md-1">
-    <p>日期范围</p>
-  </div>
-  <div class="col-md-3">
-
-  </div>
-</div>
-<div class="col-md-12">
+日期范围:<nz-range-picker  [(ngModel)]="dateRange"  (ngModelChange)="submit()">
+</nz-range-picker>
+<div nzSpan="24">
   <div id="graph" style="width:90%;height: 600px">
 
   </div>

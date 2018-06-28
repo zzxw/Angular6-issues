@@ -208,6 +208,10 @@
     semver "^5.3.0"
     semver-intersect "^1.1.2"
 
+"@types/echarts@0.0.13":
+  version "0.0.13"
+  resolved "http://10.39.104.40:10011/repository/npm-public/@types/echarts/-/echarts-0.0.13.tgz#e19aed81537c3e68b9ed94300321572e7bed4edd"
+
 "@types/jasmine@*", "@types/jasmine@~2.8.6":
   version "2.8.8"
   resolved "http://10.39.104.40:10011/repository/npm-public/@types/jasmine/-/jasmine-2.8.8.tgz#bf53a7d193ea8b03867a38bfdb4fbb0e0bf066c9"
@@ -1828,6 +1832,12 @@ ecc-jsbn@~0.1.1:
   resolved "http://10.39.104.40:10011/repository/npm-public/ecc-jsbn/-/ecc-jsbn-0.1.1.tgz#0fc73a9ed5f0d53c38193398523ef7e543777505"
   dependencies:
     jsbn "~0.1.0"
+
+echarts@^4.1.0:
+  version "4.1.0"
+  resolved "http://10.39.104.40:10011/repository/npm-public/echarts/-/echarts-4.1.0.tgz#d588c95f73c1a9928b9c73d5b769751c3185bcdc"
+  dependencies:
+    zrender "4.0.4"
 
 ee-first@1.1.1:
   version "1.1.1"
@@ -3553,9 +3563,9 @@ less-loader@^4.1.0:
     loader-utils "^1.1.0"
     pify "^3.0.0"
 
-less@2.7.2:
-  version "2.7.2"
-  resolved "http://10.39.104.40:10011/repository/npm-public/less/-/less-2.7.2.tgz#368d6cc73e1fb03981183280918743c5dcf9b3df"
+less@^2.7.2:
+  version "2.7.3"
+  resolved "http://10.39.104.40:10011/repository/npm-public/less/-/less-2.7.3.tgz#cc1260f51c900a9ec0d91fb6998139e02507b63b"
   optionalDependencies:
     errno "^0.1.1"
     graceful-fs "^4.1.2"
@@ -3563,7 +3573,7 @@ less@2.7.2:
     mime "^1.2.11"
     mkdirp "^0.5.0"
     promise "^7.1.1"
-    request "^2.72.0"
+    request "2.81.0"
     source-map "^0.5.3"
 
 less@^3.0.4:
@@ -4997,7 +5007,7 @@ repeating@^2.0.0:
   dependencies:
     is-finite "^1.0.0"
 
-"request@>=2.9.0 <2.82.0":
+request@2.81.0, "request@>=2.9.0 <2.82.0":
   version "2.81.0"
   resolved "http://10.39.104.40:10011/repository/npm-public/request/-/request-2.81.0.tgz#c6928946a0e06c5f8d6f8a9333469ffda46298a0"
   dependencies:
@@ -5024,7 +5034,7 @@ repeating@^2.0.0:
     tunnel-agent "^0.6.0"
     uuid "^3.0.0"
 
-request@^2.72.0, request@^2.74.0, request@^2.78.0, request@^2.83.0:
+request@^2.74.0, request@^2.78.0, request@^2.83.0:
   version "2.87.0"
   resolved "http://10.39.104.40:10011/repository/npm-public/request/-/request-2.87.0.tgz#32f00235cd08d482b4d0d68db93a829c0ed5756e"
   dependencies:
@@ -6616,3 +6626,7 @@ yn@^2.0.0:
 zone.js@^0.8.26:
   version "0.8.26"
   resolved "http://10.39.104.40:10011/repository/npm-public/zone.js/-/zone.js-0.8.26.tgz#7bdd72f7668c5a7ad6b118148b4ea39c59d08d2d"
+
+zrender@4.0.4:
+  version "4.0.4"
+  resolved "http://10.39.104.40:10011/repository/npm-public/zrender/-/zrender-4.0.4.tgz#910e60d888f00c9599073f23758dd23345fe48fd"

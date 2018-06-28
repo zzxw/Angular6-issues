@@ -1,3 +1,13 @@
-<p>
-  trend works!
-</p>
+项目名称:
+<nz-select style="width: 300px;" nzShowSearch nzAllowClear nzDropdownMatchSelectWidth nzPlaceHolder="选择项目" [(ngModel)]="project" (ngModelChange)="getData()">
+  <nz-option nzCustomContent [nzValue]= "item['values'][0]" [nzLabel] = "item['values'][0]" *ngFor="let item of projects">
+    {{item['values'][0]}}
+  </nz-option>
+</nz-select>
+日期范围:<nz-range-picker  [(ngModel)]="dateRange"  (ngModelChange)="getData()">
+</nz-range-picker>
+<div nzSpan="24">
+  <div id="graph" style="width:90%;height: 600px">
+  </div>
+</div>
+

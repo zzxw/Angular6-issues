@@ -1,7 +1,46 @@
 <nz-tabset [nzType]="'card'" [nzTabBarExtraContent]="extraTemplate" nzShowPagination="true">
-  <nz-tab nzTitle="问题追踪">
-    <i class="anticon anticon-search"></i>
-    <input type="text" nz-input placeholder="模糊查询" [(ngModel)]="subject">
+  <nz-tab nzTitle="问题追踪" nz-row nzGutter="2">
+    <div style="margin-bottom: 16px;" nz-col nzSpan="8">
+      <nz-input-group  nzAddOnBeforeIcon="anticon anticon-search" [nzAddOnAfter]="addOnAfterTemplate" nz-col nzSpan="8">
+        <input type="text" nz-input [(ngModel)]="subject" placeholder="模糊查询">
+      </nz-input-group>
+      <ng-template #addOnAfterTemplate>
+        <label nz-radio [(ngModel)]="isReg" (click)="toggle()">正则</label>
+      </ng-template>
+    </div>
+    <div nz-col nzSpan="1" class="gutter-row">
+      <button nz-button nzType="primary" nzSearch (click)="submit()"><i class="anticon anticon-search"></i></button>
+      <button nz-button nzType="primary" (click)="clear();">
+        <i class="anticon anticon-close"></i>
+      </button>
+    </div>
+    <div nz-col nzSpan="2">
+      <button nz-button nzType="primary" (click)="show();">
+        <i [class]="icon"></i>高级搜索
+      </button>
+    </div>
+    <div nz-col nzSpan="9" nzOffset="2">
+      <div nz-col nzSpan="3">共{{totalCount}}条</div>
+      <div nz-col nzSpan="21">
+      <nz-pagination [nzPageIndex]="1" [nzTotal]="totalCount" [(nzPageIndex)]="currentPage" nzShowSizeChanger  nzShowQuickJumper [nzSize]="'small'"></nz-pagination>
+      </div>
+    </div>
+    <div *ngIf="isShow" nz-col nzSpan="24">
+      项目名称:
+      <nz-select style="width: 100px;" nzShowSearch nzAllowClear nzDropdownMatchSelectWidth nzPlaceHolder="项目名称" [(ngModel)]="projectName" (ngModelChange)="submit($event)">
+        <nz-option nzCustomContent [nzValue]= "item['values'][0]" [nzLabel] = "item['values'][0]" *ngFor="let item of projects">
+          {{item['key']}}
+        </nz-option>
+      </nz-select>
+      问题状态:<nz-select style="width: 100px;" nzShowSearch nzAllowClear nzDropdownMatchSelectWidth nzPlaceHolder="问题状态" [(ngModel)]="projectName" (ngModelChange)="submit($event)">
+      <nz-option nzCustomContent [nzValue]= "item['value']" [nzLabel] = "item['key']" *ngFor="let item of option">
+        {{item['key']}}
+      </nz-option>
+    </nz-select>
+      日期范围:<nz-range-picker  [(ngModel)]="dateRange"  (ngModelChange)="submit($event)">
+    </nz-range-picker><!--[nzRanges]="ranges1" -->
+      <br>
+    </div>
   </nz-tab>
   <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab">
     <ng-template #titleTemplate>
@@ -17,16 +56,6 @@
   <i class="ant-tabs-new-tab anticon anticon-plus" (click)="newTab()"></i>
 </ng-template>
 
-
-
-<!--<ul id="myTab" class="nav nav-tabs">
-  <li class="active">
-    <a data-toggle="tab" href="#home">问题追踪</a>
-  </li>
-  <li *ngFor="let item of tabs">
-    <a data-toggle="tab" href="#{{item}}">{{item}}</a>
-  </li>
-</ul>-->
 <div id="myTabContent" class="tab-content" *ngFor="let item of tabs">
   <div class="tab-pane fade in active" id="home">
     <div class='row col-md-12' class='form-inline'>
