@@ -1,3 +1,20 @@
-<p>
-  issues-tab works!
-</p>
+<div nz-row>
+  <nz-collapse>
+    <nz-collapse-panel [nzHeader]="panelName" [nzActive]="true">
+      Status:{{status}}
+    </nz-collapse-panel>
+  </nz-collapse>
+  <div nz-col nzSpan="24" #panelName>
+      <i class="anticon anticon-right"></i>
+      {{title}}
+ <!--   <div nz-col nzSpan="24" *ngIf="isShow">
+    Status:{{status}}
+  </div>-->
+  </div>
+
+  <div nz-col nzSpan="8" (click)="showInfo();" *ngFor="let item of issues">
+    <p>{{item['values'][2]}}</p><br/>
+    <p>{{item['values'][1]}}   {{item['values'][3]}}</p>
+  </div>
+  <div nz-col nzSpan="16"></div>
+</div>

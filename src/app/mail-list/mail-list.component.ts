@@ -31,13 +31,7 @@ export class MailListComponent implements OnInit {
   }
 
   ngOnInit() {
-    /*let form = new FormControl();
-    this.formValue = form.value;
-    form.valueChanges.subscribe(
-      (value: string) => {
-        console.log("form", value);
-      }
-    );*/
+
 
     query.page.currentPage = 1;
     this.getData(query);
@@ -77,9 +71,6 @@ export class MailListComponent implements OnInit {
     this.dateRange = [];
     this.getData(query);
   }
-  /*static change(str) {
-    console.log(str);
-  }*/
   getData(condition: any): void {
     const responseData = this.service.getData(condition);
     console.log(responseData);
@@ -94,14 +85,6 @@ export class MailListComponent implements OnInit {
       console.log(error);
     });
   }
-  /*static showCal() {
-    laydate.render({
-      elem: '#time',
-      theme: '#0c6acf',
-      range: true
-    });
-    console.log(laydate);
-  }*/
   showDetail(item) {
     const no = item.values[0];
     const url = 'http://10.39.201.21:8888/' + 'vc/mail/' + no;
