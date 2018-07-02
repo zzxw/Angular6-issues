@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {StatisticsService} from './statistics.service';
 import * as echars from 'echarts';
+import {Range} from '../range';
 
 @Component({
   selector: 'app-statistics',
@@ -15,8 +16,12 @@ export class StatisticsComponent implements OnInit {
   dateRange: Array<Date>;
   option: Object;
   myChart: Object;
+  range: Range;
+  ranges: Object;
   constructor( public http: Http) {
     this.service = new StatisticsService(this.http);
+    this.range = new Range();
+    this.ranges = {};
   }
 
   ngOnInit() {
@@ -34,6 +39,7 @@ export class StatisticsComponent implements OnInit {
         size: 0
       }
     };
+    this.ranges = this.range.getDateRange();
     this.myChart = echars.init(document.getElementById('graph') as any);
     this.option = {
       title: {

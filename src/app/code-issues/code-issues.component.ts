@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {CodeIssuesService} from './code-issues.service';
 
@@ -14,13 +14,10 @@ export class CodeIssuesComponent implements OnInit {
   count: number;
   maxCode: string;
   nextCode: string;
-  // table test
-  dataSet: Object;
   loading: boolean;
   total: number;
   pageIndex: number;
   pageSize: number;
-  filterGender: Object;
   options: Array<Object>;
   selected: any;
   constructor(public http: Http) {
@@ -31,13 +28,6 @@ export class CodeIssuesComponent implements OnInit {
     this.options = [{
       value: 'zhejiang',
       label: 'Zhejiang'}];
-  }
-  myAddEvent(obj, event, func) {
-    if (obj.attachEvent) {
-      obj.attachEvent('on' + event, func);
-    } else {
-      obj.addEventListener(event, func, false);
-    }
   }
   getData() {
     const responseData = this.service.test();
@@ -112,7 +102,4 @@ export class CodeIssuesComponent implements OnInit {
       this.myAddEvent(tr[i], 'click', this.getMaxCode);
     }*/
   }
-  searchData() {}
-  sort($event) {}
-  updateFilter($event) {}
 }

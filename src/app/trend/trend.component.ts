@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {TrendService} from './trend.service';
 import {Http, Response} from '@angular/http';
 import * as echarts from 'echarts';
+import {Range} from '../range';
 
 @Component({
   selector: 'app-trend',
@@ -18,13 +19,18 @@ export class TrendComponent implements OnInit {
   dateRange: Array<Date>;
   option: Object;
   myChart: Object;
+  range: Range;
+  ranges: Object;
   constructor(public http: Http) {
     this.service = new TrendService(this.http);
+    this.range = new Range();
+    this.ranges = {};
   }
   ngOnInit() {
     this.query = {
       page: { currentPage: 1, size: 0 }, criteria: { project: '', daterange: [] }, order: { by: '', type: '' }
     };
+    this.ranges = this.range.getDateRange();
     this.option = {
       title: {
         text: '一线报告问题',

@@ -1,8 +1,5 @@
-<div nz-col nzSpan="24">
+<div nz-row>
   <div nz-col nzSpan="10">
-      <!--<button class="btn btn-default" type="button">
-        <i class="anticon anticon-search"></i>
-      </button>-->
       <nz-input-group nzSearch [nzSuffix]="suffixIconButton">
         <input type="text" nz-input placeholder="模糊查询" [(ngModel)]="subject">
       </nz-input-group>
@@ -22,28 +19,26 @@
           {{item['key']}}
         </nz-option>
       </nz-select>
-    日期选择:<nz-range-picker  [(ngModel)]="dateRange"  (ngModelChange)="submit($event)">
-    </nz-range-picker><!--[nzRanges]="ranges1" -->
+    日期选择:<nz-range-picker  [(ngModel)]="dateRange"  (ngModelChange)="submit($event)" [nzRanges]="ranges">
+    </nz-range-picker>
     <br>
     </div>
   </div>
 </div>
-  <div nz-col nzSpan="6">
-    <div style="float: right">
-      <span>共{{records || 0}}条</span>
-      <i class="anticon anticon-left" (click)="prevPage();" [ngClass]="{'disabled':currentPage===1}"></i>
-      <i class="anticon anticon-right" (click)="nextPage();"></i>
+<div nz-row>
+  <div nz-col [nzSpan]="6" style="overflow-y: scroll;height: 800px">
+    <div nz-col [nzSpan]="24">
+      <div nz-col [nzSpan]="6">共{{records || 0}}条</div>
+      <div nz-col [nzSpan]="18" *ngIf="records"><nz-pagination [nzPageIndex]="currentPage" (nzPageIndexChange)="changePage($event)" [nzTotal]="records" nzSimple></nz-pagination></div>
     </div>
-    <div *ngIf="data">
-      <ul *ngFor="let item of data">
-        <li (click)="showDetail(item)">
-          <b>{{item.values[1]}}</b><br/>
-          <b>{{item.values[2]}}</b>
-        </li>
-      </ul>
+    <div *ngIf="data" nz-col [nzSpan]="18">
+      <nz-card *ngFor="let item of data" (click)="showDetail(item)">
+        <b>{{item.values[1]}}</b><br/>
+        <p>{{item.values[2]}}</p>
+      </nz-card>
     </div>
   </div>
-  <div *ngIf="iFrame">
-    <iframe height="800px" width="400px" [src]="iFrame"></iframe>
-    <!--{{mailDetail}}-->
+  <div *ngIf="iFrame" nz-col [nzSpan]="18">
+    <iframe height="800px" width="100%" [src]="iFrame"></iframe>
   </div>
+</div>

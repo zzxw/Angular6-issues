@@ -15,8 +15,6 @@ export class VersionComponent implements OnInit {
   version: string;
   loading: boolean;
   total: number;
-  pageIndex: number;
-  pageSize: number;
   constructor(public http: Http) {
     this.service = new VersionService(this.http);
   }

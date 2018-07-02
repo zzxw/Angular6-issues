@@ -1,20 +1,46 @@
 <div nz-row>
   <nz-collapse>
-    <nz-collapse-panel [nzHeader]="panelName" [nzActive]="true">
-      Status:{{status}}
+    <nz-collapse-panel [nzHeader]="title" [nzActive]="false">
+      <nz-table
+        [nzNoResult]="'暂无文档'"
+        nzSize="middle"
+        [nzData]="docsData"
+        nzBordered>
+        <thead nzSingleSort>
+        <tr>
+          <th>Status</th>
+          <th>documents</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>{{status}}</td>
+          <td>
+            <!--<div *ngIf="typeof(docsData) ==='undefined' || docsData.length === 0">暂无文档</div>-->
+            <ul *ngIf="docsData">
+              <li *ngFor="let item of docsData"><a [href]="docUrl + item.values[0]">{{item.values[1]}}</a></li>
+            </ul>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
     </nz-collapse-panel>
   </nz-collapse>
-  <div nz-col nzSpan="24" #panelName>
-      <i class="anticon anticon-right"></i>
-      {{title}}
- <!--   <div nz-col nzSpan="24" *ngIf="isShow">
-    Status:{{status}}
-  </div>-->
+</div>
+<div nz-row>
+  <div nz-col [nzSpan]="8">
+   <!-- <div (click)="showInfo();" *ngFor="let item of issues">
+      <span>{{item['values'][2]}}</span>
+      <span>   {{item['values'][3]}}</span>
+      <p>{{item['values'][1]}}</p>
+    </div>-->
+    <nz-card *ngFor="let item of issues" (click)="showInfo(item)">
+      <span>{{item['values'][2]}}</span>
+      <span>   {{item['values'][3]}}</span>
+      <p>{{item['values'][1]}}</p>
+    </nz-card>
   </div>
-
-  <div nz-col nzSpan="8" (click)="showInfo();" *ngFor="let item of issues">
-    <p>{{item['values'][2]}}</p><br/>
-    <p>{{item['values'][1]}}   {{item['values'][3]}}</p>
+  <div nz-col [nzSpan]="16" *ngIf="iFrame">
+    <iframe height="400px" width="100%"  [src]="iFrame"></iframe>
   </div>
-  <div nz-col nzSpan="16"></div>
 </div>

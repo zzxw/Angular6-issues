@@ -1,9 +1,9 @@
-import {Component, OnInit, Inject, Input} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {IssuesTabService} from './issues-tab.service';
 import {Http, Response} from '@angular/http';
-import {Observable} from 'rxjs';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import {Options} from '../options';
-import {st} from '@angular/core/src/render3';
+import {baseUrl} from '../serviceUrl';
 
 @Component({
   selector: 'app-issues-tab',
@@ -11,6 +11,7 @@ import {st} from '@angular/core/src/render3';
   styleUrls: ['./issues-tab.component.css']
 })
 export class IssuesTabComponent implements OnInit {
+  iFrame: SafeResourceUrl;
   issues: Array<Object>;
   service: IssuesTabService;
   @Input()map: Map<string, string>;
@@ -19,7 +20,9 @@ export class IssuesTabComponent implements OnInit {
   icon: string;
   optionIns: Options;
   status: string;
-  constructor(public http: Http) {
+  docsData: Array<any>;
+  docUrl: string;
+  constructor(public http: Http, public sanitizer: DomSanitizer) {
     this.service = new IssuesTabService(this.http);
     this.optionIns = new Options();
   }
@@ -30,7 +33,14 @@ export class IssuesTabComponent implements OnInit {
     this.isShow = false;
     this.status = this.map['status'];
   }
-  showInfo() {}
+  showInfo(item) {
+    console.log(item);
+    const no = item.values[0];
+    console.log(no);
+    const url = baseUrl + 'vc/issuelog/' + no;
+    this.iFrame = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    console.log(this.iFrame);
+  }
   show() {
     const response = this.service.getDetails(this.map['no']);
     response.subscribe((res: Response) => {
@@ -42,16 +52,17 @@ export class IssuesTabComponent implements OnInit {
     }, (err: string) => {
       console.log(err);
     });
+    if (typeof(this.docUrl) === 'undefined') {
+      this.docUrl = baseUrl + 'vc/download/';
+    }
     const doc = this.service.getDocs(this.map['no']);
     doc.subscribe((res: Response) => {
       const docs = res.json();
       console.log(docs);
+      this.docsData = docs.records;
+      console.log(this.docsData);
     }, (err: string) => {
       console.log(err);
     });
-  }
-  tog() {
-    this.isShow = this.isShow ? false : true;
-    this.icon = this.isShow ? 'anticon anticon-down' : 'anticon anticon-right';
   }
 }

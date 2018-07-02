@@ -3,8 +3,8 @@ import {query} from '../query';
 import {Http, Response} from '@angular/http';
 import {MailService} from './mail.service';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Options} from '../options';
+import {Range} from '../range';
 
 @Component({
   selector: 'app-mail-list',
@@ -13,6 +13,7 @@ import {Options} from '../options';
 })
 export class MailListComponent implements OnInit {
   service: MailService;
+  range: Range;
   data: any;
   totalPage: number;
   records: number;
@@ -25,7 +26,9 @@ export class MailListComponent implements OnInit {
   option: Array<Object>;
   isShow: boolean;
   icon: string;
+  ranges: Object;
   constructor(public http: Http, public sanitizer: DomSanitizer) {
+    this.range = new Range();
     this.service = new MailService(http);
     this.options = new Options();
   }
@@ -46,6 +49,8 @@ export class MailListComponent implements OnInit {
     console.log(this.option);
     this.isShow = false;
     this.icon = 'anticon anticon-caret-down';
+    this.ranges = this.range.getDateRange();
+    console.log(this.ranges);
   }
   submit(obj) {
     const range: Array<string> = [];
@@ -69,6 +74,9 @@ export class MailListComponent implements OnInit {
     this.subject = '';
     this.status = '';
     this.dateRange = [];
+    query.criteria.subject = this.subject;
+    query.criteria.status = this.status;
+    query.criteria.daterange = this.dateRange;
     this.getData(query);
   }
   getData(condition: any): void {
@@ -100,22 +108,10 @@ export class MailListComponent implements OnInit {
       console.log(error);
     });*/
   }
-  prevPage() {
-    if (this.currentPage === 1) {
-      return;
-    }
-    this.currentPage--;
+  changePage($event) {
+    console.log($event);
+    this.currentPage = $event;
     query.page.currentPage = this.currentPage;
-    console.log(query);
-    this.getData(query);
-  }
-  nextPage() {
-    if (this.currentPage === this.totalPage) {
-      return;
-    }
-    this.currentPage++;
-    query.page.currentPage = this.currentPage;
-    console.log(query);
     this.getData(query);
   }
   toggle() {

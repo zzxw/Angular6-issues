@@ -17,4 +17,8 @@ export class IssuesTabService {
     this.url = baseUrl + 'vc/docs/' + no;
     return this.http.get(this.url);
   }
+  getIssueLog(no: string): Observable<any> {
+    this.url = baseUrl + 'vc/issuelog/' + no;
+    return this.http.get(this.url);
+  }
 }

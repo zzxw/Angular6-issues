@@ -2,10 +2,10 @@
   <nz-tab nzTitle="问题追踪" nz-row nzGutter="2">
     <div nz-col nzSpan="8">
       <nz-input-group  nzAddOnBeforeIcon="anticon anticon-search" [nzAddOnAfter]="addOnAfterTemplate" nz-col nzSpan="8">
-        <input type="text" nz-input [(ngModel)]="subject" placeholder="模糊查询">
+        <input type="text" nz-input [(ngModel)]="subject" placeholder="模糊查询" (ngModelChange)="subjectChange($event)">
       </nz-input-group>
       <ng-template #addOnAfterTemplate>
-        <label nz-radio [(ngModel)]="isReg" (click)="toggle()">正则</label>
+        <label nz-radio [ngModel]="isReg" (click)="toggle()">正则</label>
       </ng-template>
     </div>
     <div nz-col nzSpan="1" class="gutter-row">
@@ -22,31 +22,30 @@
     <div nz-col nzSpan="9" nzOffset="2">
       <div nz-col nzSpan="3">共{{totalCount}}条</div>
       <div nz-col nzSpan="21">
-      <nz-pagination [nzPageIndex]="1" [nzTotal]="totalCount" [(nzPageIndex)]="currentPage" nzShowSizeChanger  nzShowQuickJumper [nzSize]="'small'"></nz-pagination>
+      <nz-pagination [nzTotal]="totalCount" [(nzPageIndex)]="currentPage" [(nzPageSize)]="pageSize" (nzPageSizeChange)="changePageSize($event)" (nzPageIndexChange)="changePage($event)" nzShowSizeChanger  nzShowQuickJumper [nzSize]="'small'"></nz-pagination>
       </div>
     </div>
     <div *ngIf="isShow" nz-col nzSpan="24">
       项目名称:
-      <nz-select style="width: 100px;" nzShowSearch nzAllowClear nzDropdownMatchSelectWidth nzPlaceHolder="项目名称" [(ngModel)]="projectName" (ngModelChange)="submit($event)">
+      <nz-select style="width: 200px;" nzShowSearch nzAllowClear nzDropdownMatchSelectWidth nzPlaceHolder="项目名称" [(ngModel)]="projectName" (ngModelChange)="projectChange($event)">
         <nz-option nzCustomContent [nzValue]= "item['values'][0]" [nzLabel] = "item['values'][0]" *ngFor="let item of projects">
-          {{item['key']}}
+          {{item['values'][0]}}
         </nz-option>
       </nz-select>
-      问题状态:<nz-select style="width: 100px;" nzShowSearch nzAllowClear nzDropdownMatchSelectWidth nzPlaceHolder="问题状态" [(ngModel)]="projectName" (ngModelChange)="submit($event)">
-      <nz-option nzCustomContent [nzValue]= "item['value']" [nzLabel] = "item['key']" *ngFor="let item of option">
-        {{item['key']}}
-      </nz-option>
-    </nz-select>
-      日期范围:<nz-range-picker  [(ngModel)]="dateRange"  (ngModelChange)="submit($event)">
+      问题状态<nz-select  style="width: 250px;" nzMode="multiple" nzPlaceHolder="Please select" [(ngModel)]="status" (ngModelChange)="statusChagne($event)">
+        <nz-option *ngFor="let option of keys" [nzLabel]="option" [nzValue]="statusMap[option]"></nz-option>
+      </nz-select>
+      日期范围:<nz-range-picker  [(ngModel)]="dateRange"  (ngModelChange)="dateRangeChange($event)" [nzRanges]="ranges">
     </nz-range-picker><!--[nzRanges]="ranges1" -->
       <br>
     </div>
     <div nz-col nzSpan="24">
       <nz-table
         nzShowSizeChanger
+        [nzShowPagination]="false"
         [nzFrontPagination]="false"
-        [nzData]="dataSet"
         [nzLoading]="loading"
+        [nzData]="data"
         [nzTotal]="totalCount"
         nzSize="middle"
         [(nzPageIndex)]="pageIndex"
@@ -56,24 +55,24 @@
         (nzPageSizeChange)="searchData(true)">
         <thead (nzSortChange)="sort($event)" nzSingleSort>
         <tr>
-          <th nzShowSort>编号</th>
-          <th nzShowSort>标题</th>
-          <th nzShowSort><span>优先级</span></th>
-          <th nzShowSort><span>项目</span></th>
-          <th nzShowSort><span>版本</span></th>
-          <th nzShowSort><span>时间</span></th>
-          <th nzShowSort><span>状态</span></th>
+          <th>编号</th>
+          <th nzShowSort nzSortKey="subject">标题</th>
+          <th nzShowSort nzSortKey="priority"><span>优先级</span></th>
+          <th nzShowSort nzSortKey="report_project"><span>项目</span></th>
+          <th nzShowSort nzSortKey="report_version"><span>版本</span></th>
+          <th nzShowSort nzSortKey="report_time"><span>时间</span></th>
+          <th nzShowSort nzSortKey="status"><span>状态</span></th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let item of data">
           <td (click)="showDetails(item);"><a>{{item.values[1]}}/{{item.values[2]}}/{{item.values[3]}}</a></td>
           <td>{{item.values[4]}}</td>
-          <td>{{item.values[6]}}</td>
+          <td>{{priority[item.values[7]]}}</td>
           <td>{{item.values[8]}}</td>
           <td>{{item.values[10]}}</td>
-          <td>{{item.values[9]}}</td>
-          <td class="col-md-1">{{option.getOptions('issue_status')[item.values[11]]}}</td>
+          <td>{{item.values[9].split(' ')[0]}}</td>
+          <td class="col-md-1">{{issueOption[item.values[11]] ||item.values[11]}}</td>
           <td></td>
           <td></td>
         </tr>
@@ -88,15 +87,6 @@
         <i class="anticon anticon-close" (click)="closeTab(tab)"></i>
       </div>
     </ng-template>
-      <!--<div nz-row>
-        <div nz-col nzSpan="24">
-        </div>
-        <div nz-col nzSpan="8" (click)="showInfo(issue);" *ngFor="let item of issues">
-          <p>{{item.values[2]}}</p><br/>
-          <p>{{item.values[1]}}   {{item.values[3]}}</p>
-        </div>
-        <div nz-col nzSpan="16"></div>
-      </div>-->
     <app-issues-tab [map]="map"></app-issues-tab>
   </nz-tab>
 </nz-tabset>

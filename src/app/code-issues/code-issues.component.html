@@ -6,19 +6,17 @@
 </nz-select>
 <!--[nzScroll]="{ y: '500px'}" 表格纵向滚动条,会出现表头不对齐，可设置表头固定宽度。或者 分页-->
 <nz-table
-  nzShowSizeChanger
   [nzFrontPagination]="false"
-  [nzData]="dataSet"
+  [nzShowPagination]="false"
+  [nzData]="list"
   [nzLoading]="loading"
   [nzTotal]="total"
   nzSize="middle"
   [(nzPageIndex)]="pageIndex"
   [(nzPageSize)]="pageSize"
   [nzScroll]="{ y: '650px'}"
-  nzBordered
-  (nzPageIndexChange)="searchData()"
-  (nzPageSizeChange)="searchData(true)">
-  <thead (nzSortChange)="sort($event)" nzSingleSort>
+  nzBordered>
+  <thead  nzSingleSort>
   <tr>
     <th nzShowSort nzWidth="5%">#</th>
     <th nzShowFilter nzWidth="10%">编号</th>
